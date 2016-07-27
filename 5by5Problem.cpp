@@ -1,3 +1,5 @@
+//this is no where near the final form. i just wanted to get started and write something down.
+//this is the rough draft of all rough drafts.
 #include <iostream>
 #include <iomanip>
 #include <cmath>
