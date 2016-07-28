@@ -4,12 +4,13 @@
 #include <iomanip>
 #include <cmath>
 #include <algorithm>
+#include <cstdlib>
 
 using namespace std;
 
 void showMatrix(const int [5][5], int); //this function will show you the matrix you input.
-void minMatrix(const int [5][5], int);  //this function determines the minimum value of each row of your matrix.
-					//will have to find a way to store these values as something other than a variable i'm assuming.
+void minMatrix(const int [5][5], int, int& a, int& b, int& c, int& d, int& e);  //this function determines the minimum value of each row of your matrix.
+void satMatrix(const int[5][5], int, int& z, int& y, int& x, int& w, int& v, int, int, int, int, int); //this function will determine which columns are saturated/unsaturated
 
 int main()
 {
@@ -23,13 +24,26 @@ int main()
 	{
 		for (int j = 0; j < 5; j++)
 		{
-			cin >> assignMatrix[i][j];
+			//cin >> assignMatrix[i][j]; // user input
+
+			assignMatrix[i][j] = rand() % 10 + 1; //random input
 		}
 	}
 
 	showMatrix(assignMatrix, 5); //calling our function to show the assignment matrix we've created
 
-	minMatrix(assignMatrix, 5); //searching for the minimum value in each row
+	int a, b, c, d, e;
+
+	minMatrix(assignMatrix, 5, a, b, c, d, e); //searching for the minimum value in each row
+
+	cout << "These are the minima for each row, respectively: ";
+	cout << a << " " << b << " " << c << " " << d << " " << e << endl;
+
+	int z, y, x, w, v;
+
+	satMatrix(assignMatrix, 5, z, y, x, w, v, a, b, c, d, e); //determining which columns are saturated
+
+	cout << "Your saturated columns are " << z << ", " << y << ", " << x << ", " << w << ", " << v << "." << endl;
 
 	system("pause");
 	return 0;
@@ -48,9 +62,8 @@ void showMatrix(const int assignMatrix[5][5], int) //this function will show you
 	}
 }
 
-void minMatrix(const int assignMatrix[5][5], int) //this function determines the minimum value of each row of your matrix.
+void minMatrix(const int assignMatrix[5][5], int, int& a, int& b, int& c, int& d, int& e) //this function determines the minimum value of each row of your matrix, and passes a-e back to main
 {
-	int a, b, c, d, e;
 
 	for (int i = 0; i < 5; i++) 
 	{
@@ -110,4 +123,57 @@ void minMatrix(const int assignMatrix[5][5], int) //this function determines the
 			}
 		}
 	}
+}
+
+void satMatrix(const int assignMatrix[5][5], int, int& z, int& y, int& x, int& w, int& v, int a, int b, int c, int d, int e) //will determine saturated/unsaturated columns
+{
+	for (int i = 0; i < 5; i++)
+	{
+		if (i == 0)
+		{
+			for (int j = 0; j < 5; j++)
+			{
+				if (a == assignMatrix[i][j])
+					z = j + 1;
+			}
+		}
+
+		if (i == 1)
+		{
+			for (int j = 0; j < 5; j++)
+			{
+				if (b == assignMatrix[i][j])
+					y = j + 1;
+			}
+		}
+
+		if (i == 2)
+		{
+			for (int j = 0; j < 5; j++)
+			{
+				if (c == assignMatrix[i][j])
+					x = j + 1;
+			}
+		}
+
+		if (i == 3)
+		{
+			for (int j = 0; j < 5; j++)
+			{
+				if (d == assignMatrix[i][j])
+					w = j + 1;
+			}
+		}
+
+		if (i == 4)
+		{
+			for (int j = 0; j < 5; j++)
+			{
+				if (e == assignMatrix[i][j])
+					v = j + 1;
+			}
+		}
+	}
+
+	//cout << "Your saturated columns are " << z << ", " << y << ", " << x << ", " << w << ", " << v << "." << endl;
 }
