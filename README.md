@@ -13,3 +13,6 @@ Added satMatrix function and random matrix generator. Need to fix satMatrix for 
 
 #Update July 29th, 9:25AM
 I added a solution checker for any user-inputed 5x5 assignment matrix. Brute force method, summing elements from one row each and making sure those elements don't occupy the same column.
+
+#August 1st, 4:08PM
+No code update today. Didn't work on it over the weekend but gave some thought on how I wanted to attain (row, column) coordinates for the minima in the assignment matrix. I have a method, just working on making it nice and readable
