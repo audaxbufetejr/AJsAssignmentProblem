@@ -4,14 +4,13 @@
 #include <iomanip>
 #include <cmath>
 #include <algorithm>
-#include <string>
-#include <vector>
 
 using namespace std;
 
 void showMatrix(const int [5][5], int); //this function will show you the matrix you input.
 void minMatrix(const int [5][5], int, int& a, int& b, int& c, int& d, int& e);  //this function determines the minimum value of each row of your matrix.
 void satMatrix(const int[5][5], int, int& z, int& y, int& x, int& w, int& v, int, int, int, int, int); //this function will determine which columns are saturated/unsaturated
+void killRow(const int [5][5], int [5][5], int z, int y, int x, int w, int v);
 
 int main()
 {
@@ -37,113 +36,30 @@ int main()
 
 	minMatrix(assignMatrix, 5, a, b, c, d, e); //searching for the minimum value in each row
 
-	cout << "These are the minima for each row, respectively: ";
-	cout << a << " " << b << " " << c << " " << d << " " << e << endl;
+	int matrixMins[5] = { a, b, c, d, e };
+	
+	cout << "The respective minimums for each row are as follows: " << endl;
+	for (int i = 0; i < 5; i++)
+	{
+		cout << setw(4) << matrixMins[i];
+	}
+	cout << endl;
 
 	int z, y, x, w, v;
 
 	satMatrix(assignMatrix, 5, z, y, x, w, v, a, b, c, d, e); //determining which columns are saturated
 
 	int newTable[5][5] = { 0 };
-	int min1 = 100;
-	int min2 = 100;
-	int min3 = 100;
-	int min4 = 100;
-	int min5 = 100;
+	int min[5] = { 100, 100, 100, 100, 100 };
 
-	if (z != 1 && y != 1 && x != 1 && w != 1 && v != 1)
-	{
-		cout << "Column 1 is unsaturated." << endl;
+	killRow(assignMatrix, newTable, z, y, x, w, v);
 
-		newTable[0][0] = abs(a - assignMatrix[0][0]);
-		newTable[1][0] = abs(b - assignMatrix[1][0]);
-		newTable[2][0] = abs(c - assignMatrix[2][0]);
-		newTable[3][0] = abs(d - assignMatrix[3][0]);
-		newTable[4][0] = abs(e - assignMatrix[4][0]);
-
-		for (int i = 0; i < 5; i++)
-		{
-			if (newTable[i][0] < min1)
-				min1 = newTable[i][0];
-		}
-	}
-
-	if (z != 2 && y != 2 && x != 2 && w != 2 && v != 2)
-	{
-		cout << "Column 2 is unsaturated." << endl;
-
-		newTable[0][1] = abs(a - assignMatrix[0][1]);
-		newTable[1][1] = abs(b - assignMatrix[1][1]);
-		newTable[2][1] = abs(c - assignMatrix[2][1]);
-		newTable[3][1] = abs(d - assignMatrix[3][1]);
-		newTable[4][1] = abs(e - assignMatrix[4][1]);
-
-		for (int i = 0; i < 5; i++)
-		{
-			if (newTable[i][1] < min2)
-				min2 = newTable[i][1];
-		}
-	}
-
-	if (z != 3 && y != 3 && x != 3 && w != 3 && v != 3)
-	{
-		cout << "Column 3 is unsaturated." << endl;
-
-		newTable[0][2] = abs(a - assignMatrix[0][2]);
-		newTable[1][2] = abs(b - assignMatrix[1][2]);
-		newTable[2][2] = abs(c - assignMatrix[2][2]);
-		newTable[3][2] = abs(d - assignMatrix[3][2]);
-		newTable[4][2] = abs(e - assignMatrix[4][2]);
-
-		for (int i = 0; i < 5; i++)
-		{
-			if (newTable[i][2] < min3)
-				min3 = newTable[i][2];
-		}
-	}
-
-	if (z != 4 && y != 4 && x != 4 && w != 4 && v != 4)
-	{
-		cout << "Column 4 is unsaturated." << endl;
-
-		newTable[0][3] = abs(a - assignMatrix[0][3]);
-		newTable[1][3] = abs(b - assignMatrix[1][3]);
-		newTable[2][3] = abs(c - assignMatrix[2][3]);
-		newTable[3][3] = abs(d - assignMatrix[3][3]);
-		newTable[4][3] = abs(e - assignMatrix[4][3]);
-
-		for (int i = 0; i < 5; i++)
-		{
-			if (newTable[i][3] < min4)
-				min4 = newTable[i][3];
-		}
-	}
-
-	if (z != 5 && y != 5 && x != 5 && w != 5 && v != 5)
-	{
-		cout << "Column 5 is unsaturated." << endl;
-
-		newTable[0][4] = abs(a - assignMatrix[0][4]);
-		newTable[1][4] = abs(b - assignMatrix[1][4]);
-		newTable[2][4] = abs(c - assignMatrix[2][4]);
-		newTable[3][4] = abs(d - assignMatrix[3][4]);
-		newTable[4][4] = abs(e - assignMatrix[4][4]);
-
-		for (int i = 0; i < 5; i++)
-		{
-			if (newTable[i][4] < min5)
-				min5 = newTable[i][4];
-		}
-	}
-
-	if (z != y && z != x && z != w && z != v) //killing the row of the optimally saturated column 1
+	/*if (z != y && z != x && z != w && z != v) //killing the row of the optimally saturated column 1
 	{
 		int test = assignMatrix[0][0];
 
 		for (int i = 0; i < 5; i++)
 		{
-			cout << test << endl;
-
 			if (assignMatrix[i][0] < test)
 			{
 				test = assignMatrix[i][0];
@@ -164,8 +80,6 @@ int main()
 
 		for (int i = 0; i < 5; i++)
 		{
-			cout << test << endl;
-
 			if (assignMatrix[i][1] < test)
 			{
 				test = assignMatrix[i][1];
@@ -182,13 +96,13 @@ int main()
 
 	if (x != y && x != z && x != w && x != v) //killing the row of the optimally saturated column 3
 	{
-		int test3 = assignMatrix[0][2];
+		int test = assignMatrix[0][2];
 
 		for (int i = 0; i < 5; i++)
 		{
-			if (assignMatrix[i][2] < test3)
+			if (assignMatrix[i][2] < test)
 			{
-				test3 = assignMatrix[i][2];
+				test = assignMatrix[i][2];
 				int killRow = i;
 
 				for (int j = 0; j < 5; j++)
@@ -238,6 +152,96 @@ int main()
 			}
 
 		}
+	}*/
+
+	if (z != 1 && y != 1 && x != 1 && w != 1 && v != 1)
+	{
+		cout << "Column 1 is unsaturated." << endl;
+
+		for (int i = 0; i < 5; i++)
+		{
+			while (newTable[i][0] == 0)
+			{
+				newTable[i][0] = abs(matrixMins[i] - assignMatrix[i][0]);
+			}
+
+			if (newTable[i][0] < min[0])
+				min[0] = newTable[i][0];
+		}
+
+		cout << min[0] << endl;
+	}
+
+	if (z != 2 && y != 2 && x != 2 && w != 2 && v != 2)
+	{
+		cout << "Column 2 is unsaturated." << endl;
+
+		for (int i = 0; i < 5; i++)
+		{
+			while (newTable[i][1] == 0)
+			{
+				newTable[i][1] = abs(matrixMins[i] - assignMatrix[i][1]);
+			}
+
+			if (newTable[i][1] < min[1])
+				min[1] = newTable[i][1];
+		}
+
+		cout << min[1] << endl;
+	}
+
+	if (z != 3 && y != 3 && x != 3 && w != 3 && v != 3)
+	{
+		cout << "Column 3 is unsaturated." << endl;
+
+		for (int i = 0; i < 5; i++)
+		{
+			while (newTable[i][2] == 0)
+			{
+				newTable[i][2] = abs(matrixMins[i] - assignMatrix[i][2]);
+			}
+
+			if (newTable[i][2] < min[2])
+				min[2] = newTable[i][2];
+		}
+
+		cout << min[2] << endl;
+	}
+
+	if (z != 4 && y != 4 && x != 4 && w != 4 && v != 4)
+	{
+		cout << "Column 4 is unsaturated." << endl;
+
+		for (int i = 0; i < 5; i++)
+		{
+			while (newTable[i][3] == 0)
+			{
+				newTable[i][3] = abs(matrixMins[i] - assignMatrix[i][3]);
+			}
+
+			if (newTable[i][3] < min[3])
+				min[3] = newTable[i][3];
+		}
+
+		cout << min[3] << endl;
+	}
+
+	if (z != 5 && y != 5 && x != 5 && w != 5 && v != 5)
+	{
+		cout << "Column 5 is unsaturated." << endl;
+
+		for (int i = 0; i < 5; i++)
+		{
+			while (newTable[i][4] == 0)
+			{
+				newTable[i][4] = abs(matrixMins[i] - assignMatrix[i][4]);
+			}
+
+			if (newTable[i][4] < min[4])
+				min[4] = newTable[i][4];
+		}	
+
+		cout << min[4] << endl;
 	}
 	
 	for (int i = 0; i < 5; i++)
@@ -249,33 +253,26 @@ int main()
 		cout << endl;
 	}
 
-	/*for (int j = 0; j < 5; j++)
+	cout << "These are the min differences: ";
+	for (int i = 0; i < 5; i++)
+		cout << " " << min[i];
+	cout << endl;
+
+	for (int i = 0; i < 5; i++)
 	{
-		if (j == 0)
+		if (min[i] == 100)
+			continue;
+
+		for (int j = 0; j < 5; j++)
 		{
-			if (newTable[])
+			for (int k = 0; k < 5; k++)
+			{
+				if (min[i] == newTable[j][k])
+					cout << "row " << j + 1 << ", column " << k + 1 << endl;
+			}
 		}
+	}
 
-		if (i == 1)
-		{
-
-		}
-
-		if (i == 2)
-		{
-
-		}
-
-		if (i == 3)
-		{
-
-		}
-
-		if (i == 4)
-		{
-
-		}
-	}*/
 	system("pause");
 	return 0;
 }
@@ -445,5 +442,108 @@ void satMatrix(const int assignMatrix[5][5], int, int& z, int& y, int& x, int& w
 	if (v != y && v != x && v != w && v != z)
 	{
 		cout << "Column " << v << " is optimally saturated." << endl; //column v=5
+	}
+}
+
+void killRow(const int assignMatrix[5][5], int newTable[5][5], int z, int y, int x, int w, int v)
+{
+	if (z != y && z != x && z != w && z != v) //killing the row of the optimally saturated column 1
+	{
+		int test = assignMatrix[0][0];
+
+		for (int i = 0; i < 5; i++)
+		{
+			if (assignMatrix[i][0] < test)
+			{
+				test = assignMatrix[i][0];
+				int killRow = i;
+
+				for (int j = 0; j < 5; j++)
+				{
+					newTable[killRow][j] = 5555;
+				}
+			}
+
+		}
+	}
+
+	if (y != z && y != x && y != w && y != v) //killing the row of the optimally saturated column 2
+	{
+		int test = assignMatrix[0][1];
+
+		for (int i = 0; i < 5; i++)
+		{
+			if (assignMatrix[i][1] < test)
+			{
+				test = assignMatrix[i][1];
+				int killRow = i;
+
+				for (int j = 0; j < 5; j++)
+				{
+					newTable[killRow][j] = 5555;
+				}
+			}
+
+		}
+	}
+
+	if (x != y && x != z && x != w && x != v) //killing the row of the optimally saturated column 3
+	{
+		int test = assignMatrix[0][2];
+
+		for (int i = 0; i < 5; i++)
+		{
+			if (assignMatrix[i][2] < test)
+			{
+				test = assignMatrix[i][2];
+				int killRow = i;
+
+				for (int j = 0; j < 5; j++)
+				{
+					newTable[killRow][j] = 5555;
+				}
+			}
+
+		}
+	}
+
+	if (w != y && w != x && w != z && w != v) //killing the row of the optimally saturated column 4
+	{
+		int test = assignMatrix[0][3];
+
+		for (int i = 0; i < 5; i++)
+		{
+			if (assignMatrix[i][3] < test)
+			{
+				test = assignMatrix[i][3];
+				int killRow = i;
+
+				for (int j = 0; j < 5; j++)
+				{
+					newTable[killRow][j] = 5555;
+				}
+			}
+
+		}
+	}
+
+	if (v != y && v != x && v != w && v != z) //killing the row of the optimally saturated column 5
+	{
+		int test = assignMatrix[0][4];
+
+		for (int i = 0; i < 5; i++)
+		{
+			if (assignMatrix[i][4] < test)
+			{
+				test = assignMatrix[i][4];
+				int killRow = i;
+
+				for (int j = 0; j < 5; j++)
+				{
+					newTable[killRow][j] = 5555;
+				}
+			}
+
+		}
 	}
 }
