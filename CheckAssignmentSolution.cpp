@@ -1,6 +1,9 @@
 #include <iostream>
 #include <iomanip>
-
+/*
+This is a brute-force method to find the optimal solution for a given 5x5 assignment problem.
+Will not (yet) output coordinates of optimal assignments.
+*/
 using namespace std;
 
 void showMatrix(const int[5][5], int); //this will output the matrix the user enters
