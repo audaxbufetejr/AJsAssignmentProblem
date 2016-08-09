@@ -19,3 +19,6 @@ No code update today. Didn't work on it over the weekend but gave some thought o
 
 #August 8th, 12:43PM
 I have been working on code (no word/ppt update yet) consistently. I'll have the new cpp up later on today. Currently trying to acquire minimum values in the "new table" and then make the changes in the assignMatrix based off those minimum values.
+
+#August 9th, 2:11PM
+Created new folder so I can post all .cpp files as I progress. New .cpp file.
