@@ -1,11 +1,9 @@
 #include <iostream>
 #include <iomanip>
-/*
-This is a brute-force method to find the optimal solution for a given 5x5 assignment problem.
-Will not (yet) output coordinates of optimal assignments.
-*/
+
 using namespace std;
 
+void getMatrix(int assignMatrix[5][5]);
 void showMatrix(const int[5][5], int); //this will output the matrix the user enters
 void findSolution(const int[5][5], int, int& VAL); //this will, by brute force method, find the optimal solution
 
@@ -15,13 +13,7 @@ int main()
 
 	int assignMatrix[5][5]; //creates the 5x5 matrix
 
-	for (int i = 0; i < 5; i++) //these two for loops will assign values from left to right, top to bottom
-	{
-		for (int j = 0; j < 5; j++)
-		{
-			cin >> assignMatrix[i][j];
-		}
-	}
+	getMatrix(assignMatrix);
 
 	showMatrix(assignMatrix, 5); //printing out our matrix
 
@@ -35,7 +27,24 @@ int main()
 	system("pause");
 	return 0;
 }
-
+//
+//
+//
+//
+void getMatrix(int assignMatrix[5][5])
+{
+	for (int i = 0; i < 5; i++) //these two for loops will assign values from left to right, top to bottom
+	{
+		for (int j = 0; j < 5; j++)
+		{
+			cin >> assignMatrix[i][j];
+		}
+	}
+}
+//
+//
+//
+//
 void showMatrix(const int assignMatrix[5][5], int) //our function to print out the matrix
 {
 	for (int i = 0; i < 5; i++) //these for loops write out the values in our array from left to right, top to bottom, just as we entered them
@@ -48,7 +57,10 @@ void showMatrix(const int assignMatrix[5][5], int) //our function to print out t
 		cout << endl;
 	}
 }
-
+//
+//
+//
+//
 void findSolution(const int assignMatrix[5][5], int, int& VAL) //the function which finds the solution
 {
 	int num1;
@@ -89,14 +101,19 @@ void findSolution(const int assignMatrix[5][5], int, int& VAL) //the function wh
 						num4 = assignMatrix[3][d];
 						num5 = assignMatrix[4][e];
 
+						cout << "a is " << a << endl;
+
 						sum = num1 + num2 + num3 + num4 + num5;
 
-						if (sum < VAL)
+						if (sum <= VAL)
+						{
 							VAL = sum;
+
+							cout << num1 << " at (1, " << a + 1 << "), " << num2 << " at (2, " << b + 1 << "), " << num3 << " at (3, " << c + 1 << "), " << num4 << " at (4, " << d + 1 << ")" << num5 << " at (5, " << e + 1 << ")" << endl;
+						}
 					}
 				}
 			}
 		}
 	}
-
 }
