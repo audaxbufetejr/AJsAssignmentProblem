@@ -6,6 +6,7 @@ using namespace std;
 void getMatrix(int assignMatrix[5][5]);
 void showMatrix(const int[5][5], int); //this will output the matrix the user enters
 void findSolution(const int[5][5], int, int& VAL); //this will, by brute force method, find the optimal solution
+void showCoordinates(const int[5][5], int, int& VAL);
 
 int main()
 {
@@ -23,6 +24,8 @@ int main()
 	findSolution(assignMatrix, 5, VAL); //solving the assignment matrix
 
 	cout << "The optimal solution is " << VAL << endl;
+
+	showCoordinates(assignMatrix, 5, VAL);
 
 	system("pause");
 	return 0;
@@ -101,15 +104,62 @@ void findSolution(const int assignMatrix[5][5], int, int& VAL) //the function wh
 						num4 = assignMatrix[3][d];
 						num5 = assignMatrix[4][e];
 
-						cout << "a is " << a << endl;
-
 						sum = num1 + num2 + num3 + num4 + num5;
 
 						if (sum <= VAL)
 						{
 							VAL = sum;
 
-							cout << num1 << " at (1, " << a + 1 << "), " << num2 << " at (2, " << b + 1 << "), " << num3 << " at (3, " << c + 1 << "), " << num4 << " at (4, " << d + 1 << ")" << num5 << " at (5, " << e + 1 << ")" << endl;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+//
+//
+//
+//
+void showCoordinates(const int assignMatrix[5][5], int, int& VAL)
+{
+	int num1;
+	int num2;
+	int num3;
+	int num4;
+	int num5;
+	int sum;
+
+	for (int a = 0; a < 5; a++)
+	{
+		for (int b = 0; b < 5; b++)
+		{
+			if (b == a)
+				continue;
+			for (int c = 0; c < 5; c++)
+			{
+				if (c == a || c == b)
+					continue;
+				for (int d = 0; d < 5; d++)
+				{
+					if (d == a || d == b || d == c)
+						continue;
+					for (int e = 0; e < 5; e++)
+					{
+						if (e == a || e == b || e == c || e == d)
+							continue;
+
+						num1 = assignMatrix[0][a];
+						num2 = assignMatrix[1][b];
+						num3 = assignMatrix[2][c];
+						num4 = assignMatrix[3][d];
+						num5 = assignMatrix[4][e];
+
+						sum = num1 + num2 + num3 + num4 + num5;
+
+						if (sum == VAL)
+						{
+							cout << "(1, " << a + 1 << "), (2, " << b + 1 << "), (3, " << c + 1 << "), (4, " << d + 1 << "), (5, " << e + 1 << ")" << endl;
 						}
 					}
 				}
