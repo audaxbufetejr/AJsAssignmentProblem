@@ -24,4 +24,4 @@ I have been working on code (no word/ppt update yet) consistently. I'll have the
 Created new folder so I can post all .cpp files as I progress. New .cpp file.
 
 #August 18th, 10:25AM
-Uploaded docx file containing walkthrough of my method so you can do the problem by hand. Also updated the AssignmentChecker; it spits out the coordinates of the optimal assignments. The output is a little ugly for now. Will mop it up soon and update.
+Uploaded pdf file containing walkthrough of my method so you can do the problem by hand. Also updated the AssignmentChecker; it spits out the coordinates of the optimal assignments. The output is a little ugly for now. Will mop it up soon and update.
