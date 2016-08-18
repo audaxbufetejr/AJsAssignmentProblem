@@ -22,3 +22,6 @@ I have been working on code (no word/ppt update yet) consistently. I'll have the
 
 #August 9th, 2:11PM
 Created new folder so I can post all .cpp files as I progress. New .cpp file.
+
+#August 18th, 10:25AM
+Uploaded docx file containing walkthrough of my method so you can do the problem by hand. Also updated the AssignmentChecker; it spits out the coordinates of the optimal assignments. The output is a little ugly for now. Will mop it up soon and update.
